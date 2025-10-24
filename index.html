@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel SAG-DAER | STESA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0078d4, #00a86b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px 35px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      width: 320px;
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #0078d4;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #0078d4;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+      min-height: 18px;
+    }
+
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 62.25%;
+      height: 0;
+      overflow: hidden;
+      display: none;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        width: 85%;
+        padding: 25px;
+      }
+      .logo {
+        width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container" id="loginBox">
+    <img src="https://www.stesa.com.br/wp-content/uploads/2021/06/STESA-LOGO.png" alt="Logo STESA" class="logo">
+    <h2>Acesso Restrito</h2>
+    <input type="text" id="username" placeholder="Usuário" autocomplete="off" required>
+    <input type="password" id="password" placeholder="Senha" required>
+    <button onclick="checkLogin()">Entrar</button>
+    <div class="error" id="errorMsg"></div>
+  </div>
+
+  <div class="iframe-container" id="iframeBox">
+    <iframe title="Painel SAG-DAER"
+      src="https://app.powerbi.com/view?r=eyJrIjoiYTI4ZTQzNGUtYjZkOC00ZmY1LTk4NjItNGU0Y2ZkOGFjZTY3IiwidCI6IjRkNzI5NWZhLWZkN2EtNGJmNC1hMjJkLWVkYjM4ZGRiNmRjOCJ9"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <script>
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    function checkLogin() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (user === "sagstedaer" && pass === "SdSTE@2025!") {
+        document.getElementById('loginBox').style.display = 'none';
+        document.body.style.background = '#fff';
+        document.getElementById('iframeBox').style.display = 'block';
+      } else {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          window.location.href = "https://www.stesa.com.br";
+        } else {
+          errorMsg.textContent = `Usuário ou senha incorretos. Tentativas restantes: ${maxAttempts - attempts}`;
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
